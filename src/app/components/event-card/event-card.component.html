@@ -1,0 +1,52 @@
+<div class="event-card" (click)="onCardClick()">
+  <!-- Event Image -->
+  <div class="event-image-wrapper">
+    <img
+      [src]="'http://localhost:3000/' + event.photoPath"
+      [alt]="event.name"
+      class="event-image"
+      loading="eager"
+    />
+    <!-- Category Badge -->
+    <div class="category-badge">{{ event.category }}</div>
+    <!-- Favorite Button -->
+    <button
+      class="favorite-btn"
+      [class.is-favorite]="isFavorite"
+      (click)="toggleFavorite($event)"
+      [title]="isFavorite ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'"
+    >
+      <i [class]="isFavorite ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
+    </button>
+    <!-- Sold Out Badge -->
+    <div class="sold-out-badge" *ngIf="isSoldOut">
+      BRAK MIEJSC
+    </div>
+  </div>
+
+  <!-- Event Content -->
+  <div class="event-content">
+    <!-- Date -->
+    <div class="event-date">
+      <i class="bi bi-calendar-event"></i>
+      {{ eventDate }}
+    </div>
+
+    <!-- Title -->
+    <h5 class="event-title">{{ event.name }}</h5>
+
+    <!-- Location -->
+    <div class="event-location">
+      <i class="bi bi-geo-alt"></i>
+      {{ event.location }}
+    </div>
+
+    <!-- Footer -->
+    <div class="event-footer">
+      <div class="event-price">{{ formattedPrice }}</div>
+      <div class="event-spaces" [class.low-spaces]="availableSpaces < 5 && availableSpaces > 0">
+        {{ availableSpaces }} <span class="text-muted">miejsc</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,89 @@
+{
+  "name": "EventHub",
+  "description": "Platforma do odkrywania i organizowania najlepszych eventów w Polsce",
+  "url": "https://eventhub.pl",
+  "logo": "https://eventhub.pl/assets/logo.png",
+  "type": "WebApplication",
+  "category": "Events",
+  "features": [
+    "Search events by location",
+    "Search events by date",
+    "Search events by category",
+    "Event reservations",
+    "User profile management",
+    "Favorites management"
+  ],
+  "categories": [
+    "Koncerty",
+    "Festiwale",
+    "Konferencje",
+    "Warsztaty",
+    "Spotkania społeczne",
+    "Sporty",
+    "Sztuka i kultura"
+  ],
+  "seo": {
+    "title": "EventHub - Odkrywaj i Organizuj Wydarzenia",
+    "description": "Platforma do odkrywania i organizowania najlepszych eventów. Znajdź koncerty, festiwale, konferencje i wiele więcej w Twojej okolicy.",
+    "keywords": "eventy, koncerty, festiwale, konferencje, wydarzenia, rezerwacja, płatności, bilety",
+    "canonicalUrl": "https://eventhub.pl",
+    "language": "pl-PL",
+    "robots": "index, follow"
+  },
+  "socialMedia": {
+    "facebook": "https://www.facebook.com/eventhub",
+    "instagram": "https://www.instagram.com/eventhub",
+    "twitter": "https://www.twitter.com/eventhub",
+    "linkedin": "https://www.linkedin.com/company/eventhub"
+  },
+  "contact": {
+    "email": "info@eventhub.pl",
+    "phone": "+48123456789",
+    "address": "ul. Eventowa 1, 00-000 Warszawa",
+    "country": "Poland"
+  },
+  "pages": [
+    {
+      "url": "/",
+      "title": "Strona Główna | EventHub",
+      "description": "Odkryj najlepsze wydarzenia w Twojej okolicy - koncerty, festiwale, konferencje i wiele więcej na platformie EventHub.",
+      "keywords": "eventy, koncerty, festiwale, konferencje, wydarzenia"
+    },
+    {
+      "url": "/event/:id",
+      "title": "Szczegóły Wydarzenia | EventHub",
+      "description": "Szczegółowe informacje o wydarzeniu, możliwość rezerwacji i dodania do ulubionych.",
+      "keywords": "szczegóły eventu, rezerwacja, bilet"
+    },
+    {
+      "url": "/profile",
+      "title": "Mój Profil | EventHub",
+      "description": "Zarządzanie profilem użytkownika i rezerwacjami na EventHub.",
+      "keywords": "profil, rezerwacje, ustawienia"
+    },
+    {
+      "url": "/about",
+      "title": "O Platformie | EventHub",
+      "description": "Dowiedz się więcej o platformie EventHub i naszej misji.",
+      "keywords": "o nas, EventHub, informacje o firmie"
+    },
+    {
+      "url": "/contact",
+      "title": "Kontakt | EventHub",
+      "description": "Skontaktuj się z nami - mamy pytania? Chętnie Ci pomagamy!",
+      "keywords": "kontakt, support, pomoc"
+    },
+    {
+      "url": "/terms",
+      "title": "Regulamin | EventHub",
+      "description": "Regulamin korzystania z platformy EventHub.",
+      "keywords": "regulamin, warunki użytkowania"
+    },
+    {
+      "url": "/privacy",
+      "title": "Polityka Prywatności | EventHub",
+      "description": "Polityka prywatności i ochrona danych osobowych na platformie EventHub.",
+      "keywords": "polityka prywatności, ochrona danych, RODO"
+    }
+  ]
+}

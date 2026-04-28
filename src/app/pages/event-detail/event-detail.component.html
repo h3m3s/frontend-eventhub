@@ -1,0 +1,226 @@
+<div class="event-detail-page" *ngIf="!isLoading && event; else loading">
+
+  <!-- Header with Back Button -->
+  <div class="event-detail-header">
+    <button class="btn-back" (click)="goBack()">
+      <i class="bi bi-chevron-left"></i> Powrót
+    </button>
+  </div>
+
+  <!-- Event Image -->
+  <div class="event-image-section">
+    <img
+      [src]="'http://localhost:3000/' + event.photoPath"
+      [alt]="event.name"
+      class="event-image"
+    />
+    <div class="image-overlay">
+      <button
+        class="favorite-btn-large"
+        [class.is-favorite]="isFavorite"
+        (click)="toggleFavorite()"
+        [title]="isFavorite ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'"
+      >
+        <i [class]="isFavorite ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Event Content -->
+  <div class="event-detail-content">
+    <div class="container-fluid">
+      <div class="row g-4">
+
+        <!-- Main Content -->
+        <div class="col-lg-8">
+
+          <!-- Basic Info -->
+          <div class="info-section">
+            <h1 class="event-title">{{ event.name }}</h1>
+
+            <div class="event-meta">
+              <div class="meta-item">
+                <i class="bi bi-calendar-event"></i>
+                <span>{{ eventDate }}</span>
+              </div>
+              <div class="meta-item">
+                <i class="bi bi-geo-alt"></i>
+                <span>{{ event.location }}, {{ event.adress }}</span>
+              </div>
+              <button
+                class="btn btn-outline-primary w-100 mb-2"
+                (click)="navigateToEvent()"
+                >
+                <i class="bi bi-geo-alt"></i> Nawiguj
+                </button>
+              <div class="meta-item">
+                <i class="bi bi-tag"></i>
+                <span class="category-badge">{{ event.category }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="info-section">
+            <h3>Opis Wydarzenia</h3>
+            <p class="event-description">{{ event.description }}</p>
+          </div>
+
+          <!-- Event Details -->
+          <div class="info-section">
+            <h3>Szczegóły Wydarzenia</h3>
+            <div class="details-grid">
+              <div class="detail-item">
+                <strong>Data Rozpoczęcia:</strong>
+                <span>{{ event.dateStart | date: 'dd.MM.yyyy HH:mm' }}</span>
+              </div>
+              <div class="detail-item">
+                <strong>Data Zakończenia:</strong>
+                <span>{{ event.dateEnd | date: 'dd.MM.yyyy HH:mm' }}</span>
+              </div>
+              <div class="detail-item">
+                <strong>Lokalizacja:</strong>
+                <span>{{ event.location }}</span>
+              </div>
+              <div class="detail-item">
+                <strong>Adres:</strong>
+                <span>{{ event.adress }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+
+          <div class="booking-card ">
+            
+
+            <!-- Date -->
+            <div class="info-item">
+              <i class="bi bi-calendar3"></i>
+              <div>
+                <div class="info-label">Data</div>
+                <div class="info-value">
+                  {{ event?.dateStart | date: 'EEEE, d MMMM yyyy':'':'pl' }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Time -->
+            <div class="info-item">
+              <i class="bi bi-clock"></i>
+              <div>
+                <div class="info-label">Godzina</div>
+                <div class="info-value">
+                  {{ event?.dateStart | date: 'HH:mm' }} -
+                  {{ event?.dateEnd | date: 'HH:mm' }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="info-item">
+              <i class="bi bi-geo-alt"></i>
+              <div>
+                <div class="info-label">Lokalizacja</div>
+                <div class="info-value">{{ event.location }}</div>
+                <div class="info-value-small">{{ event.adress }}</div>
+              </div>
+            </div>
+
+            <div class="availability-section">
+                <div class="info-label">Dostępność</div>
+
+                <div
+                    class="availability"
+                    [class.low-availability]="event.available < 5 && event.available > 0"
+                    [class.sold-out]="isSoldOut"
+                >
+                    <div class="availability-bar">
+                    <div
+                        class="availability-fill"
+                        [style.width.%]="100 - (event?.occupancyPercent ?? 0)"
+                    ></div>
+                    </div>
+
+                    <div class="availability-text">
+                    <span *ngIf="!isSoldOut">
+                        Zostało {{ event?.available }} miejsc
+                    </span>
+
+                    <span *ngIf="isSoldOut">
+                        Brak dostępnych miejsc
+                    </span>
+                    </div>
+                </div>
+                </div>
+            <hr>
+
+            <!-- Price -->
+            <div class="price-section">
+              <div class="info-label">Cena</div>
+              <div class="price">{{ formattedPrice }}</div>
+            </div>
+
+            <hr>
+
+            <!-- Buttons -->
+            <button
+              class="btn btn-primary w-100 mb-2"
+              (click)="onReserve()"
+              [disabled]="isSoldOut"
+            >
+              <i class="bi bi-ticket"></i> Zapisz się
+            </button>
+
+            <button
+              class="btn btn-outline-secondary w-100"
+              title="Udostępnij to wydarzenie"
+            >
+              <i class="bi bi-share"></i> Udostępnij
+            </button>
+
+          </div>
+
+          <!-- Share Section -->
+          <div class="share-section">
+            <h5>Udostępnij</h5>
+            <div class="share-buttons">
+              <button class="share-btn" title="Facebook">
+                <i class="bi bi-facebook"></i>
+              </button>
+              <button class="share-btn" title="Twitter">
+                <i class="bi bi-twitter"></i>
+              </button>
+              <button class="share-btn" title="WhatsApp">
+                <i class="bi bi-whatsapp"></i>
+              </button>
+              <button class="share-btn" title="Kopiuj link">
+                <i class="bi bi-link"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<app-login-modal
+  [isOpen]="showLoginModal"
+  (close)="closeLoginModal()">
+</app-login-modal>
+
+<!-- Loading State -->
+<ng-template #loading>
+  <div class="event-detail-loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Ładowanie...</span>
+    </div>
+  </div>
+</ng-template>

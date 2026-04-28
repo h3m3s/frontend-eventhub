@@ -1,0 +1,78 @@
+<footer class="footer">
+  <div class="container-fluid py-5">
+    <div class="row mb-5">
+      <!-- About Section -->
+      <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+        <h5 class="footer-title">EventHub</h5>
+        <p class="footer-description">
+          Platforma do zarządzania i odkrywania wydarzeń. Odkrywaj organizuj wydarzenia w Twojej okolicy.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-link" title="Facebook">
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a href="#" class="social-link" title="Instagram">
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a href="#" class="social-link" title="Twitter">
+            <i class="bi bi-twitter"></i>
+          </a>
+          <a href="#" class="social-link" title="LinkedIn">
+            <i class="bi bi-linkedin"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- About Links -->
+      <div class="col-md-3 col-sm-6 mb-4 mb-md-0">
+        <h5 class="footer-title">O nas</h5>
+        <ul class="footer-links">
+          <li><a (click)="navigate('/about')">O platformie</a></li>
+          <li><a (click)="navigate('/contact')">Kontakt</a></li>
+          <li><a href="#" target="_blank">Blog</a></li>
+          <li><a href="#" target="_blank">Kariera</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal Links -->
+      <div class="col-md-3 col-sm-6 mb-4 mb-sm-0">
+        <h5 class="footer-title">Pomoc</h5>
+        <ul class="footer-links">
+          <li><a (click)="navigate('/privacy')">Polityka Prywatności</a></li>
+          <li><a (click)="navigate('/terms')">Regulamin</a></li>
+          <li><a href="#" target="_blank">FAQ</a></li>
+          <li><a href="#" target="_blank">Wsparcie</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="col-md-3 col-sm-6">
+        <h5 class="footer-title">Newsletter</h5>
+        <p class="footer-description small">
+          Otrzymuj informacje o nowych eventach na Twój email
+        </p>
+        <div class="newsletter-form">
+          <input type="email" class="form-control" placeholder="Twój email...">
+          <button class="btn btn-primary">Subskrybuj</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <hr class="footer-divider">
+
+    <!-- Bottom -->
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <p class="footer-bottom">
+          © {{ currentYear }} EventHub. Wszystkie prawa zastrzeżone.
+        </p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <p class="footer-bottom">
+          Wykonane z <i class="bi bi-heart-fill text-danger"></i> dla miłośników eventów
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

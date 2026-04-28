@@ -1,0 +1,117 @@
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  z-index: 1000;
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    color: #6366f1 !important;
+    white-space: nowrap;
+
+    i {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .search-container {
+    position: relative;
+
+    .search-input {
+      border-radius: 50px;
+      border: 2px solid #e5e7eb;
+      padding: 0.75rem 2.5rem 0.75rem 1rem;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      pointer-events: none;
+    }
+
+    .search-results {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-height: 400px;
+      overflow-y: auto;
+      z-index: 10;
+
+      .search-result-item {
+        padding: 1rem;
+        border-bottom: 1px solid #f3f4f6;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: #f9fafb;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .result-content {
+          .result-name {
+            font-weight: 600;
+            color: #111827;
+          }
+
+          .result-location {
+            font-size: 0.875rem;
+            color: #6b7280;
+          }
+        }
+      }
+    }
+  }
+
+  .nav-auth {
+    .user-menu {
+      .btn-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+
+        i {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .btn-primary {
+      background-color: #6366f1;
+      border-color: #6366f1;
+
+      &:hover {
+        background-color: #4f46e5;
+        border-color: #4f46e5;
+      }
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .header {
+    .search-container {
+      .search-input {
+        width: 100%;
+      }
+    }
+  }
+}

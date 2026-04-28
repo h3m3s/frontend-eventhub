@@ -1,0 +1,118 @@
+<header class="header sticky-top bg-white shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-lg" style="max-width: 1200px; margin: 0 auto;">
+      <!-- Logo -->
+      <a class="navbar-brand fw-bold" (click)="navigateHome()" style="cursor: pointer;">
+        <i class="bi bi-calendar-event"></i> EventHub
+      </a>
+
+      <!-- Search Bar (Center) -->
+      <div class="flex-grow-1 mx-3 d-none d-lg-block">
+        <div class="search-container position-relative">
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Szukaj wydarzeń..."
+            [(ngModel)]="searchQuery"
+            (input)="onSearch($event.target.value)"
+            autocomplete="off"
+          />
+          <i class="bi bi-search search-icon"></i>
+
+          <!-- Search Results Dropdown -->
+          <div class="search-results" *ngIf="searchResults.length > 0">
+            <div class="search-result-item" *ngFor="let event of searchResults" (click)="selectEvent(event)">
+              <div class="result-content">
+                <div class="result-name">{{ event.name }}</div>
+                <div class="result-location">{{ event.location }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- No Results -->
+          <div class="search-results" *ngIf="searchQuery.length > 2 && !isSearching && searchResults.length === 0">
+            <div class="search-result-item text-muted text-center">
+              Nie znaleziono wyników
+            </div>
+          </div>
+
+          <!-- Loading -->
+          <div class="search-results" *ngIf="isSearching">
+            <div class="search-result-item text-center">
+              <div class="spinner-border spinner-border-sm" role="status">
+                <span class="visually-hidden">Szukanie...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auth & Menu -->
+      <div class="d-flex align-items-center gap-2">
+        <!-- Add Event Button (Desktop) -->
+        <button class="btn btn-outline-secondary d-none d-lg-inline-flex gap-2 align-items-center" (click)="goToAddEvent()">
+          <span>Dodaj Wydarzenie</span>
+        </button>
+
+        <!-- User Menu -->
+        <div class="nav-auth">
+          <ng-container *ngIf="isAuthenticated$ | async; else notLoggedIn">
+            <div class="user-menu dropdown">
+              <button class="btn btn-link text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle"></i>
+                <span class="ms-2 d-none d-lg-inline">{{ (currentUser$ | async)?.name }}</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" (click)="goToProfile()">Mój profil</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" (click)="logout()">Wyloguj się</a></li>
+              </ul>
+            </div>
+          </ng-container>
+
+          <ng-template #notLoggedIn>
+            <button class="btn btn-primary" (click)="openLoginModal()">
+              Zaloguj się
+            </button>
+          </ng-template>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button
+          class="navbar-toggler d-lg-none"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#mobileMenu"
+          aria-controls="mobileMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Search -->
+  <div class="d-lg-none px-3 py-2">
+    <div class="search-container position-relative">
+      <input
+        type="text"
+        class="form-control search-input"
+        placeholder="Szukaj wydarzeń..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearch($event.target.value)"
+        autocomplete="off"
+      />
+      <i class="bi bi-search search-icon"></i>
+
+      <!-- Search Results Dropdown Mobile -->
+      <div class="search-results" *ngIf="searchResults.length > 0">
+        <div class="search-result-item" *ngFor="let event of searchResults" (click)="selectEvent(event)">
+          <div class="result-content">
+            <div class="result-name">{{ event.name }}</div>
+            <div class="result-location">{{ event.location }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
