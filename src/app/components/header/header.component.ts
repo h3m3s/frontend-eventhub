@@ -23,6 +23,8 @@ export class HeaderComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
   showLoginModal: boolean = false;
   isLoginMode: boolean = true;
+  showUserMenu: boolean = false;
+  showMobileUserMenu: boolean = false;
 
   constructor(
     private eventService: EventService,
@@ -82,7 +84,31 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/profile']);
   }
 
+  goToFavorites(): void {
+    this.router.navigate(['/favorites']);
+  }
+
+  goToSettings(): void {
+    this.router.navigate(['/settings']);
+  }
+
   goToAddEvent(): void {
-    this.router.navigate(['/create-event']);
+    this.router.navigate(['/event/add']);
+  }
+
+  toggleUserMenu(): void {
+    this.showUserMenu = !this.showUserMenu;
+  }
+
+  closeUserMenu(): void {
+    this.showUserMenu = false;
+  }
+
+  toggleMobileUserMenu(): void {
+    this.showMobileUserMenu = !this.showMobileUserMenu;
+  }
+
+  closeMobileUserMenu(): void {
+    this.showMobileUserMenu = false;
   }
 }

@@ -2,8 +2,8 @@
   <div class="container-fluid py-5">
     <div class="row">
       <div class="col-lg-6">
-        <h1>Kontakt</h1>
-        <p>Mamy pytania? Chętnie Ci pomagamy!</p>
+        <h1>Contact</h1>
+        <p>Have questions? We're happy to help!</p>
 
         <div class="contact-info">
           <div class="info-item">
@@ -25,16 +25,16 @@
           <div class="info-item">
             <i class="bi bi-geo-alt"></i>
             <div>
-              <h5>Adres</h5>
-              <p>ul. Eventowa 1<br>00-000 Warszawa</p>
+              <h5>Address</h5>
+              <p>Eventowa Street 1<br>00-000 Warsaw</p>
             </div>
           </div>
 
           <div class="info-item">
             <i class="bi bi-clock"></i>
             <div>
-              <h5>Godziny Pracy</h5>
-              <p>Pn-Pt: 09:00 - 18:00<br>Sb-Nd: Zamknięte</p>
+              <h5>Business Hours</h5>
+              <p>Mon-Fri: 09:00 - 18:00<br>Sat-Sun: Closed</p>
             </div>
           </div>
         </div>
@@ -42,15 +42,15 @@
 
       <div class="col-lg-6">
         <div class="contact-form-card">
-          <h3>Wyślij Wiadomość</h3>
+          <h3>Send Message</h3>
           <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-              <label>Imię i Nazwisko</label>
+              <label>Full Name</label>
               <input
                 type="text"
                 class="form-control"
                 formControlName="name"
-                placeholder="Twoje imię"
+                placeholder="Your name"
               />
             </div>
 
@@ -65,27 +65,27 @@
             </div>
 
             <div class="form-group">
-              <label>Temat</label>
+              <label>Subject</label>
               <input
                 type="text"
                 class="form-control"
                 formControlName="subject"
-                placeholder="Temat wiadomości"
+                placeholder="Message subject"
               />
             </div>
 
             <div class="form-group">
-              <label>Wiadomość</label>
+              <label>Message</label>
               <textarea
                 class="form-control"
                 formControlName="message"
                 rows="5"
-                placeholder="Twoja wiadomość..."
+                placeholder="Your message..."
               ></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary w-100" [disabled]="contactForm.invalid || isSending">
-              {{ isSending ? 'Wysyłanie...' : 'Wyślij Wiadomość' }}
+              {{ isSending ? 'Sending...' : 'Send Message' }}
             </button>
           </form>
         </div>

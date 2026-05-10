@@ -20,6 +20,12 @@
     position: relative;
     animation: slideUp 0.3s ease;
 
+    // Dark mode support
+    html[data-bs-theme="dark"] &,
+    body.dark-theme & {
+      background: #2a2a2a;
+    }
+
     .btn-close {
       position: absolute;
       top: 1rem;
@@ -37,12 +43,22 @@
           font-weight: 700;
           margin-bottom: 0.5rem;
           color: #111827;
+
+          html[data-bs-theme="dark"] &,
+          body.dark-theme & {
+            color: #e0e0e0;
+          }
         }
 
         .modal-subtitle {
           color: #6b7280;
           font-size: 0.95rem;
           margin-bottom: 1.5rem;
+
+          html[data-bs-theme="dark"] &,
+          body.dark-theme & {
+            color: #b0b0b0;
+          }
         }
 
         .alert {
@@ -61,6 +77,11 @@
             font-weight: 500;
             color: #374151;
             font-size: 0.875rem;
+
+            html[data-bs-theme="dark"] &,
+            body.dark-theme & {
+              color: #d0d0d0;
+            }
           }
 
           .form-control {

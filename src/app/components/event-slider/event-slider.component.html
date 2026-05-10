@@ -5,7 +5,7 @@
     <!-- Loading State -->
     <div class="loading-container" *ngIf="isLoading">
       <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Ładowanie...</span>
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
 
     <!-- Empty State -->
     <div class="empty-state" *ngIf="!isLoading && popularEvents.length === 0">
-      <p>Brak dostępnych eventów</p>
+      <p>No available events</p>
     </div>
   </div>
 </section>

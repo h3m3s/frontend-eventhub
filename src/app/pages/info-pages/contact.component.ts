@@ -26,7 +26,7 @@ export class ContactPageComponent {
     this.isSending = true;
     // TODO: Implement backend contact form submission
     setTimeout(() => {
-      alert('Dziękuję za wiadomość! Odezwiemy się wkrótce.');
+      alert('Thank you for your message! We will get back to you soon.');
       this.contactForm.reset();
       this.isSending = false;
     }, 1000);

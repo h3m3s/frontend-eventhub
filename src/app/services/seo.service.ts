@@ -112,12 +112,12 @@ export class SeoService {
   }
 
   createDefaultHomeMeta(): void {
-    this.setPageTitle('Strona Główna');
-    this.setPageDescription('Odkryj najlepsze wydarzenia w Twojej okolicy - koncerty, festiwale, konferencje i wiele więcej na platformie EventHub.');
-    this.setPageKeywords('eventy, koncerty, festiwale, konferencje, wydarzenia, rezerwacja');
+    this.setPageTitle('Home');
+    this.setPageDescription('Discover the best events in your area - concerts, festivals, conferences and more on EventHub platform.');
+    this.setPageKeywords('events, concerts, festivals, conferences, events, reservation');
     this.setOgTags(
-      'EventHub - Odkrywaj i Organizuj Wydarzenia',
-      'Platforma do odkrywania i organizowania najlepszych eventów',
+      'EventHub - Discover and Organize Events',
+      'Platform for discovering and organizing the best events',
       'https://eventhub.pl/assets/og-image.png'
     );
   }

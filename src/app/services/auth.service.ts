@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { User, AuthResponse } from '../models/user.model';
 
@@ -19,9 +19,11 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<User> {
-    return this.http.post<AuthResponse>(`${this.API_URL}/login`, { email, password }).pipe(
+    return this.http.post<any>(`${this.API_URL}/login`, { email, password }).pipe(
       tap(response => {
-        localStorage.setItem('token', response.token);
+        // Backend returns token instead of access_token
+        const token = response.token || response.access_token;
+        localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(response.user));
         this.currentUserSubject.next(response.user);
         this.isAuthenticatedSubject.next(true);
@@ -31,14 +33,25 @@ export class AuthService {
   }
 
   register(name: string, email: string, password: string, passwordConfirmation: string): Observable<User> {
-    return this.http.post<AuthResponse>(`${this.API_URL}/register`, {
+    // Backend does not expect password_confirmation in request body
+    // Check if passwords match on frontend
+    if (password !== passwordConfirmation) {
+      return throwError(() => new Error('Passwords do not match'));
+    }
+
+    const body = {
       name,
       email,
-      password,
-      password_confirmation: passwordConfirmation
-    }).pipe(
+      password
+    };
+
+    console.log('Register request body:', body);
+
+    return this.http.post<any>(`${this.API_URL}/register`, body).pipe(
       tap(response => {
-        localStorage.setItem('token', response.token);
+        // Backend returns token instead of access_token
+        const token = response.token || response.access_token;
+        localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(response.user));
         this.currentUserSubject.next(response.user);
         this.isAuthenticatedSubject.next(true);
@@ -84,7 +97,12 @@ export class AuthService {
 
   // Get user profile
   getProfile(): Observable<User> {
-    return this.http.get<User>(`${this.API_URL}/profile`);
+    return this.http.get<User>(`${this.API_URL}/profile`).pipe(
+      tap(user => {
+        this.currentUserSubject.next(user);
+        localStorage.setItem('user', JSON.stringify(user));
+      })
+    );
   }
 
   // Update user profile

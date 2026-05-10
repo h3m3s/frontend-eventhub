@@ -51,14 +51,14 @@ export class LoginModalComponent {
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe({
       next: () => {
-        this.successMessage = 'Zalogowano pomyślnie!';
+        this.successMessage = 'Logged in successfully!';
         this.isLoading = false;
         setTimeout(() => {
           this.closeModal();
         }, 1000);
       },
       error: (error) => {
-        this.errorMessage = error.error?.message || 'Logowanie nie powiodło się';
+        this.errorMessage = error.error?.message || 'Login failed';
         this.isLoading = false;
       }
     });
@@ -73,14 +73,14 @@ export class LoginModalComponent {
     const { name, email, password, passwordConfirmation } = this.registerForm.value;
     this.authService.register(name, email, password, passwordConfirmation).subscribe({
       next: () => {
-        this.successMessage = 'Rejestracja pomyślna! Zaraz się zalogujemy...';
+        this.successMessage = 'Registration successful! Logging in now...';
         this.isLoading = false;
         setTimeout(() => {
           this.closeModal();
         }, 1000);
       },
       error: (error) => {
-        this.errorMessage = error.error?.message || 'Rejestracja nie powiodła się';
+        this.errorMessage = error.error?.message || 'Registration failed';
         this.isLoading = false;
       }
     });

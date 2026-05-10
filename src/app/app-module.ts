@@ -1,6 +1,6 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Title, Meta } from '@angular/platform-browser';
@@ -16,7 +16,10 @@ import { LoginModalComponent } from './components/modals/login-modal.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { EventDetailComponent } from './pages/event-detail/event-detail.component';
+import { EventAddComponent } from './pages/event-add/event-add.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 import { TermsPageComponent } from './pages/info-pages/terms.component';
 import { PrivacyPageComponent } from './pages/info-pages/privacy.component';
 import { AboutPageComponent } from './pages/info-pages/about.component';
@@ -37,7 +40,10 @@ registerLocaleData(localePl);
     LoginModalComponent,
     HomeComponent,
     EventDetailComponent,
+    EventAddComponent,
     ProfileComponent,
+    FavoritesComponent,
+    SettingsComponent,
     TermsPageComponent,
     PrivacyPageComponent,
     AboutPageComponent,

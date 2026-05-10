@@ -1,0 +1,65 @@
+<div class="container-lg py-5" style="max-width: 1200px; margin: 0 auto;">
+
+  <!-- Header -->
+  <div class="mb-5">
+    <h1 class="display-5 fw-bold mb-2">
+      <i class="bi bi-heart-fill text-danger me-2"></i>
+      Favorite Events
+    </h1>
+
+    <p class="text-muted">
+      Here you will find all your favorite events
+    </p>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">
+        Loading...
+      </span>
+    </div>
+  </div>
+
+  <!-- Empty -->
+  <div
+    *ngIf="!isLoading && isEmpty"
+    class="alert alert-info text-center py-5"
+  >
+    <i class="bi bi-inbox display-3 mb-3 d-block"></i>
+
+    <h5>No favorite events</h5>
+
+    <p class="mb-3">
+      Add events to favorites to track them here
+    </p>
+
+    <a
+      routerLink="/"
+      class="btn btn-primary"
+    >
+      Discover Events
+    </a>
+  </div>
+
+  <!-- Favorites Grid -->
+  <div
+    *ngIf="!isLoading && !isEmpty"
+    class="row g-4"
+  >
+
+    <div
+      class="col-lg-4 col-md-6"
+      *ngFor="let event of favoriteEvents"
+    >
+
+      <app-event-card
+        [event]="event"
+      >
+      </app-event-card>
+
+    </div>
+
+  </div>
+
+</div>

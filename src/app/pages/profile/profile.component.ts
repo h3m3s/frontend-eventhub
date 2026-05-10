@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit {
     this.authService.updateProfile(name, email).subscribe({
       next: (user) => {
         this.currentUser = user;
-        this.successMessage = 'Profil zaktualizowany pomyślnie!';
+        this.successMessage = 'Profile updated successfully!';
         this.isEditMode = false;
         this.isSaving = false;
         setTimeout(() => {
@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
         }, 3000);
       },
       error: (error) => {
-        this.errorMessage = error.error?.message || 'Nie udało się zaktualizować profilu';
+        this.errorMessage = error.error?.message || 'Failed to update profile';
         this.isSaving = false;
       }
     });
@@ -95,18 +95,36 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  cancelReservation(reservationId: number): void {
-    if (confirm('Czy na pewno chcesz anulować rezerwację?')) {
-      this.reservationService.cancelReservation(reservationId).subscribe({
+  cancelReservation(reservation: Reservation): void {
+    if (confirm('Are you sure you want to cancel this reservation?')) {
+      this.reservationService.cancelReservation(reservation.event.id).subscribe({
         next: () => {
-          this.loadUserData();
-          alert('Rezerwacja anulowana');
+          this.reservations = this.reservations.filter(r => r.id !== reservation.id);
         },
         error: (error) => {
-          alert(error.error?.message || 'Nie udało się anulować rezerwacji');
+          this.errorMessage = error.error?.message || 'Failed to cancel reservation';
         }
       });
     }
+  }
+
+  getEventDate(dateStart: string): string {
+    return new Date(dateStart).toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  }
+
+  getEventTime(dateStart: string): string {
+    return new Date(dateStart).toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  goToEvent(eventId: number): void {
+    this.router.navigate(['/event', eventId]);
   }
 
   logout(): void {

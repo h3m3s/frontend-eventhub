@@ -1,0 +1,203 @@
+<div class="event-add-container">
+  <div class="event-add-wrapper">
+    <h1>Add New Event</h1>
+
+    <!-- Success message -->
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="event-form">
+      
+      <!-- Event name -->
+      <div class="form-group">
+        <label for="name">Event Name *</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name"
+          placeholder="Enter event name"
+          [class.error]="isFieldInvalid('name')"
+          class="form-input"
+        />
+        <div *ngIf="isFieldInvalid('name')" class="error-message">
+          <span *ngIf="name?.errors?.['required']">Event name is required</span>
+          <span *ngIf="name?.errors?.['minlength']">Event name must be at least 3 characters</span>
+        </div>
+      </div>
+
+      <!-- Event description - PRESERVES FORMATTING -->
+      <div class="form-group">
+        <label for="description">Event Description * <small>(formatting will be preserved)</small></label>
+        <textarea 
+          id="description" 
+          formControlName="description"
+          placeholder="Enter detailed event description (indentation and line breaks will be preserved)"
+          [class.error]="isFieldInvalid('description')"
+          class="form-textarea"
+          rows="8"
+        ></textarea>
+        <div *ngIf="isFieldInvalid('description')" class="error-message">
+          <span *ngIf="description?.errors?.['required']">Description is required</span>
+          <span *ngIf="description?.errors?.['minlength']">Description must be at least 10 characters</span>
+        </div>
+        <div class="char-count">{{ description?.value?.length || 0 }} / 5000 characters</div>
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+        <label for="category">Category *</label>
+        <select 
+          id="category" 
+          formControlName="category"
+          [class.error]="isFieldInvalid('category')"
+          class="form-select"
+        >
+          <option value="">Select a category</option>
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+        <div *ngIf="isFieldInvalid('category')" class="error-message">
+          <span *ngIf="category?.errors?.['required']">Category is required</span>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="form-group">
+        <label for="location">Location *</label>
+        <input 
+          type="text" 
+          id="location" 
+          formControlName="location"
+          placeholder="e.g. Warsaw, Krakow"
+          [class.error]="isFieldInvalid('location')"
+          class="form-input"
+        />
+        <div *ngIf="isFieldInvalid('location')" class="error-message">
+          <span *ngIf="location?.errors?.['required']">Location is required</span>
+          <span *ngIf="location?.errors?.['minlength']">Location must be at least 3 characters</span>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <label for="adress">Address *</label>
+        <input 
+          type="text" 
+          id="adress" 
+          formControlName="adress"
+          placeholder="Full address"
+          [class.error]="isFieldInvalid('adress')"
+          class="form-input"
+        />
+        <div *ngIf="isFieldInvalid('adress')" class="error-message">
+          <span *ngIf="adress?.errors?.['required']">Address is required</span>
+          <span *ngIf="adress?.errors?.['minlength']">Address must be at least 5 characters</span>
+        </div>
+      </div>
+
+      <!-- Start and end date -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dateStart">Start Date *</label>
+          <input 
+            type="datetime-local" 
+            id="dateStart" 
+            formControlName="dateStart"
+            [class.error]="isFieldInvalid('dateStart')"
+            class="form-input"
+          />
+          <div *ngIf="isFieldInvalid('dateStart')" class="error-message">
+            <span *ngIf="dateStart?.errors?.['required']">Start date is required</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dateEnd">End Date *</label>
+          <input 
+            type="datetime-local" 
+            id="dateEnd" 
+            formControlName="dateEnd"
+            [class.error]="isFieldInvalid('dateEnd')"
+            class="form-input"
+          />
+          <div *ngIf="isFieldInvalid('dateEnd')" class="error-message">
+            <span *ngIf="dateEnd?.errors?.['required']">End date is required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Limit uczestników i cena -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="limit">Limit uczestników *</label>
+          <input 
+            type="number" 
+            id="limit" 
+            formControlName="limit"
+            placeholder="Liczba miejsc"
+            [class.error]="isFieldInvalid('limit')"
+            class="form-input"
+            min="1"
+          />
+          <div *ngIf="isFieldInvalid('limit')" class="error-message">
+            <span *ngIf="limit?.errors?.['required']">Limit jest wymagany</span>
+            <span *ngIf="limit?.errors?.['min']">Limit must be at least 1</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="price">Cena (PLN) *</label>
+          <input 
+            type="number" 
+            id="price" 
+            formControlName="price"
+            placeholder="0.00"
+            [class.error]="isFieldInvalid('price')"
+            class="form-input"
+            min="0"
+            step="0.01"
+          />
+          <div *ngIf="isFieldInvalid('price')" class="error-message">
+            <span *ngIf="price?.errors?.['required']">Cena jest wymagana</span>
+            <span *ngIf="price?.errors?.['min']">Price cannot be negative</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo link -->
+      <div class="form-group">
+        <label for="photoPath">Photo Link (optional)</label>
+        <input 
+          type="url" 
+          id="photoPath" 
+          formControlName="photoPath"
+          placeholder="https://..."
+          class="form-input"
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          [disabled]="isSubmitting"
+          class="btn btn-primary"
+        >
+          {{ isSubmitting ? 'Adding...' : 'Add Event' }}
+        </button>
+        <button 
+          type="button" 
+          (click)="cancelForm()"
+          class="btn btn-secondary"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

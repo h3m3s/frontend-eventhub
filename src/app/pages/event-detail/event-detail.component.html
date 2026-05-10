@@ -3,7 +3,7 @@
   <!-- Header with Back Button -->
   <div class="event-detail-header">
     <button class="btn-back" (click)="goBack()">
-      <i class="bi bi-chevron-left"></i> Powrót
+      <i class="bi bi-chevron-left"></i> Back
     </button>
   </div>
 
@@ -19,7 +19,7 @@
         class="favorite-btn-large"
         [class.is-favorite]="isFavorite"
         (click)="toggleFavorite()"
-        [title]="isFavorite ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'"
+        [title]="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
       >
         <i [class]="isFavorite ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
       </button>
@@ -50,8 +50,9 @@
               <button
                 class="btn btn-outline-primary w-100 mb-2"
                 (click)="navigateToEvent()"
+                translate="no"
                 >
-                <i class="bi bi-geo-alt"></i> Nawiguj
+                <i class="bi bi-geo-alt"></i> Navigate
                 </button>
               <div class="meta-item">
                 <i class="bi bi-tag"></i>
@@ -62,28 +63,28 @@
 
           <!-- Description -->
           <div class="info-section">
-            <h3>Opis Wydarzenia</h3>
-            <p class="event-description">{{ event.description }}</p>
+            <h3>Event Description</h3>
+            <p class="event-description" [style.white-space]="'pre-wrap'">{{ formattedDescription }}</p>
           </div>
 
           <!-- Event Details -->
           <div class="info-section">
-            <h3>Szczegóły Wydarzenia</h3>
+            <h3>Event Details</h3>
             <div class="details-grid">
               <div class="detail-item">
-                <strong>Data Rozpoczęcia:</strong>
+                <strong>Start Date:</strong>
                 <span>{{ event.dateStart | date: 'dd.MM.yyyy HH:mm' }}</span>
               </div>
               <div class="detail-item">
-                <strong>Data Zakończenia:</strong>
+                <strong>End Date:</strong>
                 <span>{{ event.dateEnd | date: 'dd.MM.yyyy HH:mm' }}</span>
               </div>
               <div class="detail-item">
-                <strong>Lokalizacja:</strong>
+                <strong>Location:</strong>
                 <span>{{ event.location }}</span>
               </div>
               <div class="detail-item">
-                <strong>Adres:</strong>
+                <strong>Address:</strong>
                 <span>{{ event.adress }}</span>
               </div>
             </div>
@@ -101,9 +102,9 @@
             <div class="info-item">
               <i class="bi bi-calendar3"></i>
               <div>
-                <div class="info-label">Data</div>
+                <div class="info-label">Date</div>
                 <div class="info-value">
-                  {{ event?.dateStart | date: 'EEEE, d MMMM yyyy':'':'pl' }}
+                  {{ event.dateStart | date: 'EEEE, d MMMM yyyy':'':'en' }}
                 </div>
               </div>
             </div>
@@ -112,10 +113,10 @@
             <div class="info-item">
               <i class="bi bi-clock"></i>
               <div>
-                <div class="info-label">Godzina</div>
+                <div class="info-label">Time</div>
                 <div class="info-value">
-                  {{ event?.dateStart | date: 'HH:mm' }} -
-                  {{ event?.dateEnd | date: 'HH:mm' }}
+                  {{ event.dateStart | date: 'HH:mm' }} -
+                  {{ event.dateEnd | date: 'HH:mm' }}
                 </div>
               </div>
             </div>
@@ -124,14 +125,14 @@
             <div class="info-item">
               <i class="bi bi-geo-alt"></i>
               <div>
-                <div class="info-label">Lokalizacja</div>
+                <div class="info-label">Location</div>
                 <div class="info-value">{{ event.location }}</div>
                 <div class="info-value-small">{{ event.adress }}</div>
               </div>
             </div>
 
             <div class="availability-section">
-                <div class="info-label">Dostępność</div>
+                <div class="info-label">Availability</div>
 
                 <div
                     class="availability"
@@ -141,17 +142,17 @@
                     <div class="availability-bar">
                     <div
                         class="availability-fill"
-                        [style.width.%]="100 - (event?.occupancyPercent ?? 0)"
+                        [style.width.%]="100 - event.occupancyPercent"
                     ></div>
                     </div>
 
                     <div class="availability-text">
                     <span *ngIf="!isSoldOut">
-                        Zostało {{ event?.available }} miejsc
+                        {{ event.available }} spaces left
                     </span>
 
                     <span *ngIf="isSoldOut">
-                        Brak dostępnych miejsc
+                        No available spaces
                     </span>
                     </div>
                 </div>
@@ -160,7 +161,7 @@
 
             <!-- Price -->
             <div class="price-section">
-              <div class="info-label">Cena</div>
+              <div class="info-label">Price</div>
               <div class="price">{{ formattedPrice }}</div>
             </div>
 
@@ -172,21 +173,21 @@
               (click)="onReserve()"
               [disabled]="isSoldOut"
             >
-              <i class="bi bi-ticket"></i> Zapisz się
+              <i class="bi bi-ticket"></i> Reserve
             </button>
 
             <button
               class="btn btn-outline-secondary w-100"
-              title="Udostępnij to wydarzenie"
+              title="Share this event"
             >
-              <i class="bi bi-share"></i> Udostępnij
+              <i class="bi bi-share"></i> Share
             </button>
 
           </div>
 
           <!-- Share Section -->
           <div class="share-section">
-            <h5>Udostępnij</h5>
+            <h5>Share</h5>
             <div class="share-buttons">
               <button class="share-btn" title="Facebook">
                 <i class="bi bi-facebook"></i>
@@ -220,7 +221,7 @@
 <ng-template #loading>
   <div class="event-detail-loading">
     <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Ładowanie...</span>
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 </ng-template>

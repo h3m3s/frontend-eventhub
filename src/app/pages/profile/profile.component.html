@@ -11,10 +11,10 @@
           <p class="text-muted">{{ currentUser!.email }}</p>
 
           <button class="btn btn-primary w-100 mb-2" (click)="toggleEditMode()" [disabled]="isSaving">
-            {{ isEditMode ? 'Anuluj' : 'Edytuj Profil' }}
+            {{ isEditMode ? 'Cancel' : 'Edit Profile' }}
           </button>
           <button class="btn btn-outline-danger w-100" (click)="logout()">
-            Wyloguj się
+            Logout
           </button>
         </div>
       </div>
@@ -33,10 +33,10 @@
 
         <!-- Edit Profile -->
         <div class="content-card" *ngIf="isEditMode">
-          <h5>Edytuj Profil</h5>
+          <h5>Edit Profile</h5>
           <form [formGroup]="profileForm" (ngSubmit)="onSaveProfile()">
             <div class="form-group mb-3">
-              <label for="name">Imię i Nazwisko</label>
+              <label for="name">Full Name</label>
               <input
                 type="text"
                 id="name"
@@ -62,46 +62,81 @@
               class="btn btn-primary"
               [disabled]="profileForm.invalid || isSaving"
             >
-              {{ isSaving ? 'Zapisywanie...' : 'Zapisz Zmiany' }}
+              {{ isSaving ? 'Saving...' : 'Save Changes' }}
             </button>
           </form>
         </div>
 
         <!-- Reservations -->
         <div class="content-card">
-          <h5>Moje Rezerwacje</h5>
+          <h5><i class="bi bi-ticket-perforated me-2"></i>My Reservations</h5>
 
           <div class="loading-container" *ngIf="isLoading">
             <div class="spinner-border text-primary" role="status">
-              <span class="visually-hidden">Ładowanie...</span>
+              <span class="visually-hidden">Loading...</span>
             </div>
           </div>
 
           <div class="reservations-list" *ngIf="!isLoading">
             <div *ngIf="reservations.length === 0" class="empty-state">
-              <i class="bi bi-calendar-x"></i>
-              <p>Brak rezerwacji</p>
+              <i class="bi bi-ticket-perforated"></i>
+              <p>No reservations yet</p>
             </div>
 
-            <div class="reservation-item" *ngFor="let reservation of reservations">
-              <div class="reservation-content">
-                <div class="reservation-id">
-                  <strong>Rezerwacja #{{ reservation.id }}</strong>
+            <div class="reservation-card mb-3" *ngFor="let reservation of reservations">
+              <div class="row align-items-center">
+                <!-- Event Info -->
+                <div class="col-md-8">
+                  <h6 class="mb-2 fw-bold">{{ reservation.event.name }}</h6>
+                  <div class="reservation-details">
+                    <div class="detail-item">
+                      <small class="text-muted">
+                        <i class="bi bi-calendar-event"></i> Date
+                      </small>
+                      <div>{{ getEventDate(reservation.event.dateStart) }} @ {{ getEventTime(reservation.event.dateStart) }}</div>
+                    </div>
+                    <div class="detail-item">
+                      <small class="text-muted">
+                        <i class="bi bi-geo-alt"></i> Location
+                      </small>
+                      <div>{{ reservation.event.location }}</div>
+                    </div>
+                    <div class="detail-item">
+                      <small class="text-muted">
+                        <i class="bi bi-check-circle"></i> Registered
+                      </small>
+                      <div>{{ reservation.registeredAt | date: 'dd.MM.yyyy HH:mm' }}</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="reservation-date">
-                  {{ reservation.created_at | date: 'dd.MM.yyyy HH:mm' }}
-                </div>
-                <div class="reservation-status" [class]="'status-' + reservation.status">
-                  {{ reservation.status }}
+
+                <!-- Status & Actions -->
+                <div class="col-md-4 text-end">
+                  <span class="badge mb-2" [ngClass]="{
+                    'bg-success': reservation.status === 'REGISTERED',
+                    'bg-danger': reservation.status === 'CANCELLED',
+                    'bg-warning': reservation.status === 'PENDING'
+                  }">
+                    {{ reservation.status }}
+                  </span>
+
+                  <div class="mt-2">
+                    <button
+                      class="btn btn-sm btn-outline-primary me-2"
+                      (click)="goToEvent(reservation.event.id)"
+                    >
+                      <i class="bi bi-info-circle"></i> Details
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="cancelReservation(reservation)"
+                      *ngIf="reservation.status !== 'CANCELLED'"
+                    >
+                      <i class="bi bi-x-circle"></i> Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
-              <button
-                class="btn btn-sm btn-outline-danger"
-                (click)="cancelReservation(reservation.id)"
-                *ngIf="reservation.status !== 'cancelled'"
-              >
-                Anuluj
-              </button>
             </div>
           </div>
         </div>
@@ -112,7 +147,7 @@
 
 <ng-template #notAuthenticated>
   <div class="container text-center py-5">
-    <h2>Musisz się zalogować</h2>
-    <p>Aby zobaczyć swój profil, zaloguj się do konta.</p>
+    <h2>You must sign in</h2>
+    <p>To see your profile, sign in to your account.</p>
   </div>
 </ng-template>

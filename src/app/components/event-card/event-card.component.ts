@@ -41,12 +41,24 @@ export class EventCardComponent implements OnChanges {
     }
 
     if (this.isFavorite) {
-      this.eventService.removeFromFavorites(this.event.id);
+      this.eventService.removeFromFavorites(this.event.id).subscribe({
+        next: () => {
+          this.isFavorite = false;
+        },
+        error: (error) => {
+          console.error('Error removing from favorites:', error);
+        }
+      });
     } else {
-      this.eventService.addToFavorites(this.event.id);
+      this.eventService.addToFavorites(this.event.id).subscribe({
+        next: () => {
+          this.isFavorite = true;
+        },
+        error: (error) => {
+          console.error('Error adding to favorites:', error);
+        }
+      });
     }
-
-    this.isFavorite = !this.isFavorite;
   }
 
   onCardClick(): void {
@@ -55,7 +67,7 @@ export class EventCardComponent implements OnChanges {
 
   get formattedPrice(): string {
     const price = Number(this.event?.price ?? 0);
-    return price === 0 ? 'Darmowe' : `${price.toFixed(2)} PLN`;
+    return price === 0 ? 'Free' : `${price.toFixed(2)} PLN`;
   }
 
   get eventDate(): string {

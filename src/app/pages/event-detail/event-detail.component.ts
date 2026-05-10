@@ -100,12 +100,24 @@ export class EventDetailComponent implements OnInit {
     if (!this.event) return;
 
     if (this.isFavorite) {
-      this.eventService.removeFromFavorites(this.event.id);
+      this.eventService.removeFromFavorites(this.event.id).subscribe({
+        next: () => {
+          this.isFavorite = false;
+        },
+        error: (error) => {
+          console.error('Error removing from favorites:', error);
+        }
+      });
     } else {
-      this.eventService.addToFavorites(this.event.id);
+      this.eventService.addToFavorites(this.event.id).subscribe({
+        next: () => {
+          this.isFavorite = true;
+        },
+        error: (error) => {
+          console.error('Error adding to favorites:', error);
+        }
+      });
     }
-
-    this.isFavorite = !this.isFavorite;
   }
 
   // ----------------------------
@@ -122,10 +134,11 @@ export class EventDetailComponent implements OnInit {
     this.reservationService.createReservation(this.event.id).subscribe({
       next: () => {
         this.loadEvent(this.event!.id);
-        alert('Rezerwacja dodana pomyślnie!');
+        alert('Reservation added successfully!');
       },
       error: (error) => {
-        alert(error.error?.message || 'Nie udało się utworzyć rezerwacji');
+        console.error('Reservation error:', error);
+        alert(error?.error?.message || 'Failed to create reservation');
       }
     });
   }
@@ -148,7 +161,7 @@ export class EventDetailComponent implements OnInit {
     if (!this.event) return '';
 
     const price = Number(this.event.price);
-    return price === 0 ? 'Darmowe' : `${price.toFixed(2)} PLN`;
+    return price === 0 ? 'Free' : `${price.toFixed(2)} PLN`;
   }
 
   // ----------------------------
@@ -177,5 +190,14 @@ export class EventDetailComponent implements OnInit {
 
   get availabilityPercent(): number {
     return this.event?.occupancyPercent ?? 0;
+  }
+
+  // ----------------------------
+  // FORMATTED DESCRIPTION
+  // ----------------------------
+  get formattedDescription(): string {
+    if (!this.event?.description) return '';
+    // Converts \n (escape sequence) to actual line breaks
+    return this.event.description.replace(/\\n/g, '\n');
   }
 }

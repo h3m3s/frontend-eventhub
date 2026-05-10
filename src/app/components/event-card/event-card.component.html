@@ -14,13 +14,13 @@
       class="favorite-btn"
       [class.is-favorite]="isFavorite"
       (click)="toggleFavorite($event)"
-      [title]="isFavorite ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'"
+      [title]="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
     >
       <i [class]="isFavorite ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
     </button>
     <!-- Sold Out Badge -->
     <div class="sold-out-badge" *ngIf="isSoldOut">
-      BRAK MIEJSC
+      SOLD OUT
     </div>
   </div>
 
@@ -45,7 +45,7 @@
     <div class="event-footer">
       <div class="event-price">{{ formattedPrice }}</div>
       <div class="event-spaces" [class.low-spaces]="availableSpaces < 5 && availableSpaces > 0">
-        {{ availableSpaces }} <span class="text-muted">miejsc</span>
+        {{ availableSpaces }} <span class="text-muted">spaces</span>
       </div>
     </div>
   </div>
